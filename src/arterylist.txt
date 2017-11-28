@@ -1,0 +1,92 @@
+Name,ParentName,Length_cm,Radius_cm,Thickness_cm,YoungsModulus_MPa
+Right Ulnar artery 2,Right Ulnar artery 1,8.5,0.19,0.0462,0.8
+Right Brachial artery 3,Right Brachial artery 2,6.3,0.25,0.052,0.4
+Left Popliteal artery 1,Left Femoral artery 2,9.4,0.2,0.047,0.8
+Left Subclavian artery 2,Left Subclavian artery 1,6.8,0.4,0.066,0.4
+Right Cerebral artery,Right External carotid,5.9,0.08,0.026,1.6
+Left Vertebral artery,Left Subclavian artery 1,14.8,0.19,0.045,0.8
+Right Common iliac,Abdominal aorta 3,5.8,0.52,0.076,0.4
+Left Posteriortibial artery 2,Left Posteriortibial artery 1,16.1,0.18,0.045,1.6
+Left Interossea artery,Left Ulnar artery 1,7.9,0.09,0.028,1.6
+Left External iliac 1,Left Common iliac,8.3,0.29,0.055,0.4
+Splenic artery,Coeliac artery,6.3,0.28,0.054,0.4
+Right Internal iliac,Right Common iliac,5,0.2,0.04,1.6
+Thoracic aorta 2,Thoracic aorta 1,5.2,0.66,0.116,0.4
+Left Anteriortibial artery 2,Left Anteriortibial artery 1,15,0.1,0.02,1.6
+Left Anteriortibial artery 3,Left Anteriortibial artery 2,15,0.1,0.02,1.6
+Ascending aorta,Root,4,1.45,0.163,0.4
+Abdominal aorta 3,Abdominal aorta 2,5.3,0.57,0.08,0.4
+Right Subclavian artery,Brachiocephalic artery,6.8,0.4,0.066,0.4
+Superior mesenteric,Abdominal aorta 1,5.9,0.43,0.069,0.4
+Right Posteriortibial artery 1,Right Popliteal artery 2,16.1,0.18,0.045,1.6
+Left common carotid 2,Left common carotid 1,8.9,0.37,0.063,0.4
+Right Internal carotid 3,Right Internal carotid 2,5.9,0.08,0.026,1.6
+Left Profundis artery,Left External iliac 2,12.6,0.23,0.049,1.6
+Right common carotid 2,Right common carotid 1,8.9,0.37,0.063,0.4
+Right External iliac 1,Right Common iliac,8.3,0.29,0.055,0.4
+Right External iliac 2,Right External iliac 1,6.1,0.27,0.053,0.4
+Right Internal carotid 1,Right common carotid 2,5.9,0.18,0.045,0.8
+Left common carotid 3,Left common carotid 2,3.1,0.37,0.063,0.4
+Left Anteriortibial artery 1,Left Popliteal artery 2,2.5,0.13,0.039,1.6
+Left Axillary artery 1,Left Subclavian artery 2,6.1,0.36,0.062,0.4
+Left Ulnar artery 2,Left Ulnar artery 1,8.5,0.19,0.0462,0.8
+Left Renal artery,Abdominal aorta 1,3.2,0.26,0.053,0.4
+Right Axillary artery 2,Right Axillary artery 1,5.6,0.31,0.057,0.4
+Aortic arch 1,Ascending aorta,2,1.12,0.132,0.4
+Abdominal aorta 2,Abdominal aorta 1,5.3,0.57,0.08,0.4
+Inferior mesenteric,Abdominal aorta 3,5,0.16,0.043,0.4
+Right Ulnar artery 1,Right Brachial artery 4,6.7,0.21,0.049,0.8
+Left Brachial artery 2,Left Brachial artery 1,6.3,0.26,0.053,0.4
+Left Posteriortibial artery 1,Left Popliteal artery 2,16.1,0.18,0.045,1.6
+Right Renal artery,Abdominal aorta 1,3.2,0.26,0.053,0.4
+Right Radial artery 2,Right Radial artery 1,11.7,0.16,0.043,0.8
+Left Popliteal artery 2,Left Popliteal artery 1,9.4,0.2,0.05,0.4
+Coeliac artery,Thoracic aorta 3,1,0.39,0.064,0.4
+Right Femoral artery 1,Right External iliac 2,12.7,0.24,0.05,0.8
+Right Femoral artery 2,Right Femoral artery 1,12.7,0.24,0.05,0.8
+Aortic arch 2,Aortic arch 1,3.9,1.07,0.127,0.4
+Right Ulnar artery 3,Right Ulnar artery 2,8.5,0.19,0.046,0.8
+Right Interossea artery,Right Ulnar artery 1,7.9,0.09,0.028,1.6
+Left External carotid,Left Internal carotid 1,11.8,0.15,0.042,0.8
+Gastric artery,Coeliac artery,7.1,0.18,0.045,0.4
+Right Popliteal artery 2,Right Popliteal artery 1,9.4,0.2,0.05,0.4
+Right Profundis artery,Right External iliac 2,12.6,0.23,0.049,1.6
+Left Axillary artery 2,Left Axillary artery 1,5.6,0.31,0.057,0.4
+Left Radial artery 1,Left Brachial artery 4,11.7,0.16,0.043,0.8
+Left common carotid 1,Aortic arch 1,8.9,0.37,0.063,0.4
+Left Common iliac,Abdominal aorta 3,5.8,0.52,0.076,0.4
+Hepatic artery,Coeliac artery,6.6,0.22,0.049,0.4
+Left Femoral artery 2,Left Femoral artery 1,12.7,0.24,0.05,0.8
+Left Internal carotid 1,Left common carotid 3,5.9,0.18,0.045,0.8
+Right Brachial artery 4,Right Brachial artery 3,4.6,0.24,0.05,0.4
+Left Radial artery 2,Left Radial artery 1,11.7,0.16,0.043,0.8
+Right common carotid 1,Brachiocephalic artery,8.9,0.37,0.063,0.4
+Right Anteriortibial artery 2,Right Anteriortibial artery 1,15,0.1,0.02,1.6
+Left Internal carotid 3,Left Internal carotid 2,5.9,0.08,0.026,1.6
+Abdominal aorta 1,Thoracic aorta 3,5.3,0.61,0.108,0.4
+Left Brachial artery 1,Left Axillary artery 2,6.3,0.28,0.055,0.4
+Right Vertebral artery,Brachiocephalic artery,14.8,0.19,0.045,0.8
+Right External carotid,Thoracic aorta 3,11.8,0.15,0.042,0.8
+Right Brachial artery 2,Right Brachial artery 1,6.3,0.26,0.053,0.4
+Right Posteriortibial artery 2,Right Posteriortibial artery 1,16.1,0.18,0.045,1.6
+Right Internal carotid 2,Right Internal carotid 1,5.9,0.13,0.039,0.8
+Left Internal carotid 2,Left Internal carotid 1,5.9,0.13,0.039,0.8
+Left Cerebral artery,Left External carotid,5.9,0.08,0.026,1.6
+Left Brachial artery 4,Left Brachial artery 3,4.6,0.24,0.05,0.4
+Intercostal arteries,Left Subclavian artery 1,8,0.15,0.035,0.4
+Left Ulnar artery 3,Left Ulnar artery 2,8.5,0.19,0.046,0.8
+Right Brachial artery 1,Right Axillary artery 2,6.3,0.28,0.055,0.4
+Left Femoral artery 1,Left External iliac 2,12.7,0.24,0.05,0.8
+Left Brachial artery 3,Left Brachial artery 2,6.3,0.25,0.052,0.4
+Left Subclavian artery 1,Aortic arch 1,3.4,0.42,0.067,0.4
+Right Axillary artery 1,Right Subclavian artery,6.1,0.36,0.062,0.4
+Thoracic aorta 3,Thoracic aorta 2,5.2,0.66,0.116,0.4
+Right Popliteal artery 1,Right Femoral artery 2,9.4,0.2,0.047,0.8
+Left External iliac 2,Left External iliac 1,6.1,0.27,0.053,0.4
+Left Internal iliac,Left Common iliac,5,0.2,0.04,1.6
+Right Radial artery 1,Right Brachial artery 4,11.7,0.16,0.043,0.8
+Right Anteriortibial artery 1,Right Popliteal artery 2,2.5,0.13,0.039,1.6
+Right Anteriortibial artery 3,Right Anteriortibial artery 2,15,0.1,0.02,1.6
+Left Ulnar artery 1,Left Brachial artery 4,6.7,0.21,0.049,0.8
+Thoracic aorta 1,Aortic arch 2,5.2,1,0.12,0.4
+Brachiocephalic artery,Aortic arch 1,3.4,0.62,0.086,0.4
