@@ -60,6 +60,10 @@ include("updatelungs.jl")
 include("updatela.jl")
 include("coupleproximal.jl")
 include("rootinvariant.jl")
+include("fav.jl")
+include("Jav.jl")
+include("newtonav.jl")
+include("linesearch.jl")
 
 # 1D interior junction updates
 include("splitinvariants.jl")

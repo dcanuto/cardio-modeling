@@ -15,4 +15,6 @@ function discretizeheart!(system::CVSystem)
     append!(system.heart.ra.V,zeros(system.solverparams.numsteps+1))
     append!(system.heart.ra.P,zeros(system.solverparams.numsteps+1))
     append!(system.heart.ra.Q,zeros(system.solverparams.numsteps+1))
+
+    append!(system.heart.av.zeta,zeros(system.solverparams.numsteps+1))
 end

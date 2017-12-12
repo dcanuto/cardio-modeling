@@ -7,4 +7,7 @@ function applyheartics!(system::CVSystem)
 
     # associated pressures
     elastancemodel!(system,0);
+
+    # aortic valve state
+    system.heart.av.zeta[1] = 0;
 end

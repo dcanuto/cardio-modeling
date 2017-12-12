@@ -108,12 +108,37 @@ type RightAtrium
     end
 end
 
+type AorticValve
+    Kvo::Float64
+    Kvc::Float64
+    leff::Float64
+    Po::Float64
+    Pc::Float64
+    Aann::Float64
+    Ks::Float64
+    zeta::Vector{Float64}
+
+    function AorticValve()
+        this = new()
+        this.Kvo = 0.1;
+        this.Kvc = 0.1;
+        this.leff = 0.01;
+        this.Po = 0;
+        this.Pc = 0;
+        this.Aann = 6.8e-4;
+        this.Ks = 4e-9/cm3Tom3;
+        this.zeta = Vector{Float64}[];
+        return this
+    end
+end
+
 type Heart
     activation::Activation
     lv::LeftVentricle
     la::LeftAtrium
     rv::RightVentricle
     ra::RightAtrium
+    av::AorticValve
 
     function Heart()
         this = new()
@@ -122,6 +147,7 @@ type Heart
         this.la = LeftAtrium();
         this.rv = RightVentricle();
         this.ra = RightAtrium();
+        this.av = AorticValve();
         return this
     end
 end

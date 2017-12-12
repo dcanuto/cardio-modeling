@@ -19,7 +19,7 @@ type SolverParams
     nu::Float64
     diffusioncoeff::Float64
     abserror::Float64
-    maxiter::Int8
+    maxiter::Int16
     epsJ::Float64
     epsN::Float64
     maxval::Float64
@@ -45,8 +45,8 @@ type SolverParams
         this.nu = 0.5;
         this.diffusioncoeff = 22.0;
         this.abserror = 1e-10;
-        this.maxiter = 100;
-        this.epsJ = 1e-10;
+        this.maxiter = 200;
+        this.epsJ = 1e-11;
         this.epsN = 1e-8;
         this.maxval = 1e7;
         this.totaliter = 0;
