@@ -50,7 +50,7 @@ function linesearch(xold::Vector{Float64},fold::Float64,
         Pao = system.branches.beta[1][end]*((2*system.solverparams.rho/
             system.branches.beta[1][end])*((x[1]*vs-system.branches.W2root)/8+
             system.branches.c0[1][end])^2-sqrt(system.branches.A0[1][end]));
-        if x[3]*zs >= 0 && Plv > Pao
+        if Plv > Pao
             state = "opening";
         else
             state = "closing";
@@ -62,7 +62,7 @@ function linesearch(xold::Vector{Float64},fold::Float64,
         # println(p)
         JJ = J(x,system,n,state);
         # println(JJ)
-        D = diagm(maximum!(zeros(3),abs(JJ)).^-1);
+        D = diagm(maximum!(zeros(length(x)),abs(JJ)).^-1);
         fvec = D*f(x,system,n,state);
         # println(D)
         # println(fvec)
@@ -73,7 +73,7 @@ function linesearch(xold::Vector{Float64},fold::Float64,
             println(alamin)
             println(fn)
             println(fold+alpha*alam*slope)
-            println("Δx converged in line search. Verify in Newton loop.")
+            println("Δx converged in proximal line search. Verify in Newton loop.")
             check = true;
             return fn,x,check
         elseif fn < fold+alpha*alam*slope
@@ -113,7 +113,7 @@ function linesearch(xold::Vector{Float64},fold::Float64,
         if N == system.solverparams.maxiter
             println(xn)
             println(f(xn,system,n,state))
-            error("Line search iteration failed to converge.");
+            error("Proximal line search iteration failed to converge.");
         end
     end
 end

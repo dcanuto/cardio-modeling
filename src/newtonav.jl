@@ -9,39 +9,62 @@ function newtonav!(system::CVSystem,n::Int64,state::String)
     end
 
     # initial guess
-    x0 = zeros(3);
-    if system.branches.Q[1][n+1,1] == 0
-        # x0[1] = 2*1e-6/system.branches.A[1][n+1,1]-system.branches.W2root;
-        x0[1] = -system.branches.W2root + 1e-7;
+    if state == "opening"
+        zdot = (1-system.heart.av.zeta[n+1])*system.heart.av.Kvo*
+            (system.heart.lv.P[n+1]-system.branches.P[1][n+1,1]*mmHgToPa);
     else
-        x0[1] = system.branches.W1root;
-        # x0[1] = (system.branches.W2root + 8*(sqrt(system.branches.beta[1][end]/
-        #         (2*system.solverparams.rho))*system.branches.A[1][n+1,1]^0.25-
-        #         system.branches.c0[1][end]));
+        zdot = system.heart.av.zeta[n+1]*system.heart.av.Kvc*
+            (system.heart.lv.P[n+1]-system.branches.P[1][n+1,1]*mmHgToPa);
     end
-    if system.branches.Q[1][n+1,1] != 0
-        x0[2] = (system.heart.lv.V[n+1] -
-            system.solverparams.h*system.branches.Q[1][n+1,1]);
-    elseif state == "opening" && system.branches.Q[1][n+1,1] == 0
-        x0[2] = system.heart.lv.V[n+1]
-        # x0[2] = (system.heart.lv.V[n+1] -
-        #     system.solverparams.h*1e-6);
-    end
-    if system.heart.av.zeta[n+1] == 0
-        x0[3] = zs;
-    elseif state == "opening"
-        x0[3] = system.heart.av.zeta[n+1] + 1e-5;
-    elseif state == "closing" && abs(system.heart.lv.P[n+1]/mmHgToPa - system.branches.P[1][n+1,1]) < 20
-        x0[3] = system.heart.av.zeta[n+1] - 2e-5;
-    elseif state == "closing"
-        x0[3] = system.heart.av.zeta[n+1];
-    end
+    if abs(zdot) <= 1e-5
+        println("Switching to reduced system.")
+        x0 = zeros(2);
+        if system.branches.Q[1][n+1,1] == 0
+            x0[1] = -system.branches.W2root + 1e-7;
+        else
+            x0[1] = system.branches.W1root;
+        end
+        if system.branches.Q[1][n+1,1] != 0
+            x0[2] = (system.heart.lv.V[n+1] -
+                system.solverparams.h*system.branches.Q[1][n+1,1]);
+        elseif state == "opening" && system.branches.Q[1][n+1,1] == 0
+            x0[2] = system.heart.lv.V[n+1]
+        end
 
-    # non-dimensionalize
-    x0[1] = x0[1]/vs;
-    x0[2] = x0[2]/Vs;
-    x0[3] = x0[3]/zs;
-    # println(x0)
+        # non-dimensionalize
+        x0[1] = x0[1]/vs;
+        x0[2] = x0[2]/Vs;
+        # println(x0)
+
+    else
+        x0 = zeros(3);
+        if system.branches.Q[1][n+1,1] == 0
+            x0[1] = -system.branches.W2root + 1e-7;
+        else
+            x0[1] = system.branches.W1root;
+        end
+        if system.branches.Q[1][n+1,1] != 0
+            x0[2] = (system.heart.lv.V[n+1] -
+                system.solverparams.h*system.branches.Q[1][n+1,1]);
+        elseif state == "opening" && system.branches.Q[1][n+1,1] == 0
+            x0[2] = system.heart.lv.V[n+1]
+        end
+        if system.heart.av.zeta[n+1] == 0
+            x0[3] = zs;
+        elseif state == "opening"
+            x0[3] = system.heart.av.zeta[n+1] + system.solverparams.h*zdot;
+        elseif state == "closing" && abs(system.heart.lv.P[n+1]/mmHgToPa - system.branches.P[1][n+1,1]) < 20
+            x0[3] = system.heart.av.zeta[n+1] + system.solverparams.h*zdot;
+        elseif state == "closing"
+            x0[3] = system.heart.av.zeta[n+1];
+        end
+
+        # non-dimensionalize
+        x0[1] = x0[1]/vs;
+        x0[2] = x0[2]/Vs;
+        x0[3] = x0[3]/zs;
+        # println(x0)
+    end
 
     # assign function/Jacobian handles
     f = fav;
@@ -63,7 +86,7 @@ function newtonav!(system::CVSystem,n::Int64,state::String)
         Pao = system.branches.beta[1][end]*((2*system.solverparams.rho/
             system.branches.beta[1][end])*((xx[1]*vs-system.branches.W2root)/8+
             system.branches.c0[1][end])^2-sqrt(system.branches.A0[1][end]));
-        if xx[3]*zs >= 0 && Plv > Pao
+        if Plv > Pao
             state = "opening";
         else
             state = "closing";
@@ -72,7 +95,7 @@ function newtonav!(system::CVSystem,n::Int64,state::String)
         # println(xx)
         # determine Jacobian, check invertibility
         JJ = J(xx,system,n,state);
-        D = diagm(maximum!(zeros(3),abs(JJ)).^-1);
+        D = diagm(maximum!(zeros(length(xx)),abs(JJ)).^-1);
         # println(JJ)
         # println(D)
         # println(D*JJ)
@@ -84,8 +107,6 @@ function newtonav!(system::CVSystem,n::Int64,state::String)
             print(det(D*JJ))
             error("Newton Jacobian is singular.");
         end
-        # # update state vector
-        # xn = xx - inv(D*JJ)*D*f(xx,system,n,state);
         # compute gradient of line search objective function
         fvec = D*f(xx,system,n,state);
         # println(f(xx,system,n,state))
@@ -100,14 +121,16 @@ function newtonav!(system::CVSystem,n::Int64,state::String)
         # println(xn[1]*vs)
         # check if sufficiently close to root
         JJ = J(xn,system,n,state);
-        D = diagm(maximum!(zeros(3),abs(JJ)).^-1);
+        D = diagm(maximum!(zeros(length(xx)),abs(JJ)).^-1);
         fvec = D*f(xn,system,n,state);
         # println(fvec)
         if norm(fvec) <= system.solverparams.epsN*100
             x = xn;
             x[1] = x[1]*vs;
             x[2] = x[2]*Vs;
-            x[3] = x[3]*zs;
+            if length(x) == 3
+                x[3] = x[3]*zs;
+            end
             # println(x)
             # println(system.branches.W2root)
             # println(inv(D*JJ))
@@ -158,10 +181,20 @@ function newtonav!(system::CVSystem,n::Int64,state::String)
     system.branches.Q[1][n+2,1] = 0.5*system.branches.A[1][n+2,1]*
         (x[1]+system.branches.W2root);
     system.heart.lv.V[n+2] = x[2];
-    if x[3] > system.solverparams.epsN
-        system.heart.av.zeta[n+2] = x[3];
-    elseif x[3] < system.solverparams.epsN && state == "closing"
-        system.heart.av.zeta[n+2] = 0;
+    if length(x) == 3
+        if x[3] < 1e-5 && state == "closing"
+            system.heart.av.zeta[n+2] = 0;
+            println("Aortic valve closed.")
+        else
+            system.heart.av.zeta[n+2] = x[3];
+        end
+    else
+        if system.heart.av.zeta[n+1] < 1e-5 && state == "closing"
+            system.heart.av.zeta[n+2] = 0;
+            println("Aortic valve closed.")
+        else
+            system.heart.av.zeta[n+2] = system.heart.av.zeta[n+1];
+        end
     end
 
     system.branches.W1root = x[1];

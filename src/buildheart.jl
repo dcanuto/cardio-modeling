@@ -1,19 +1,32 @@
 type Activation
-    a::Float64
-    b::Float64
-    k0::Float64
-    k1::Float64
+    # a::Float64
+    # b::Float64
+    # k0::Float64
+    # k1::Float64
     th::Array{Float64,1}
-    tce::Array{Float64,1}
+    # tce::Array{Float64,1}
+    tau1::Float64
+    tau2::Float64
+    m1::Float64
+    m2::Float64
+    k::Float64
 
     function Activation()
         this = new()
-        this.a = 1.2;
-        this.b = 0.3;
-        this.k0 = 0.2;
-        this.k1 = 0.2;
+        # this.a = 1.2;
+        # this.b = 0.3;
+        # this.k0 = 0.2;
+        # this.k1 = 0.2;
         this.th = [0.8];
-        this.tce = [0.36];
+        this.tau1 = 0.269*this.th[1];
+        this.tau2 = 0.452*this.th[1];
+        this.m1 = 1.32;
+        this.m2 = 27.4;
+        t = linspace(0,this.th[1],10000);
+        g1 = (t/this.tau1).^this.m1;
+        g2 = (t/this.tau2).^this.m2;
+        this.k = maximum((g1./(1+g1)).*(1./(1+g2)))^-1;
+        # this.tce = [0.36];
         return this
     end
 end
@@ -30,7 +43,7 @@ type LeftVentricle
         this = new()
         this.V0 = 10*cm3Tom3;
         this.Emin = 0.0283*mmHgToPa/cm3Tom3;
-        this.Emax = [2*mmHgToPa/cm3Tom3];
+        this.Emax = [3*mmHgToPa/cm3Tom3];
         this.V = Vector{Float64}[];
         this.P = Vector{Float64}[];
         this.E = Vector{Float64}[];
@@ -122,10 +135,10 @@ type AorticValve
         this = new()
         this.Kvo = 0.1;
         this.Kvc = 0.1;
-        this.leff = 0.01;
+        this.leff = 0.02;
         this.Po = 0;
         this.Pc = 0;
-        this.Aann = 6.8e-4;
+        this.Aann = 4e-4;
         this.Ks = 4e-9/cm3Tom3;
         this.zeta = Vector{Float64}[];
         return this

@@ -1,6 +1,6 @@
 function assignterminals!(system::CVSystem)
     # terminal properties adapted from Danielsen (1998)
-    R2Total = 0.05*mmHgToPa/cm3Tom3;
+    R2Total = 0.3*mmHgToPa/cm3Tom3;
     R3Total = 0.21*mmHgToPa/cm3Tom3;
     R4Total = 0.003*mmHgToPa/cm3Tom3;
     R5Total = 0.01*mmHgToPa/cm3Tom3;
@@ -130,7 +130,10 @@ function assignterminals!(system::CVSystem)
                 else
                     push!(system.branches.term[i].C,C1Lower);
                 end
-                push!(system.branches.term[i].C,C2Lower);
+                # push!(system.branches.term[i].C,C2Lower);
+                push!(system.branches.term[i].C,system.branches.A0[i][end]*
+                    system.branches.lengthincm[i]*cmTom/(system.solverparams.rho*
+                    system.branches.c0[i][end]^2));
                 push!(system.branches.term[i].C,C3Lower);
                 push!(system.branches.term[i].C,C4Lower);
                 push!(system.branches.term[i].C,C5Lower);
@@ -161,7 +164,10 @@ function assignterminals!(system::CVSystem)
                 else
                     push!(system.branches.term[i].C,C1Upper);
                 end
-                push!(system.branches.term[i].C,C2Upper);
+                # push!(system.branches.term[i].C,C2Upper);
+                push!(system.branches.term[i].C,system.branches.A0[i][end]*
+                    system.branches.lengthincm[i]*cmTom/(system.solverparams.rho*
+                    system.branches.c0[i][end]^2));
                 push!(system.branches.term[i].C,C3Upper);
                 push!(system.branches.term[i].C,C4Upper);
                 push!(system.branches.term[i].C,C5Upper);

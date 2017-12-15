@@ -64,6 +64,10 @@ include("fav.jl")
 include("Jav.jl")
 include("newtonav.jl")
 include("linesearch.jl")
+include("fdist.jl")
+include("Jdist.jl")
+include("newtondist.jl")
+include("linedist.jl")
 
 # 1D interior junction updates
 include("splitinvariants.jl")
