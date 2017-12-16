@@ -138,7 +138,7 @@ type AorticValve
         this.leff = 0.02;
         this.Po = 0;
         this.Pc = 0;
-        this.Aann = 4e-4;
+        this.Aann = 3.2e-4;
         this.Ks = 4e-9/cm3Tom3;
         this.zeta = Vector{Float64}[];
         return this

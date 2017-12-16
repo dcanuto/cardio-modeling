@@ -124,7 +124,7 @@ function newtonav!(system::CVSystem,n::Int64,state::String)
         D = diagm(maximum!(zeros(length(xx)),abs(JJ)).^-1);
         fvec = D*f(xn,system,n,state);
         # println(fvec)
-        if norm(fvec) <= system.solverparams.epsN*100
+        if norm(fvec) <= system.solverparams.epsN*1000
             x = xn;
             x[1] = x[1]*vs;
             x[2] = x[2]*Vs;
