@@ -88,7 +88,7 @@ type RightVentricle
         this = new()
         this.V0 = 10*cm3Tom3;
         this.Emin = 0.0283*mmHgToPa/cm3Tom3;
-        this.Emax = [0.36*mmHgToPa/cm3Tom3];
+        this.Emax = [0.54*mmHgToPa/cm3Tom3];
         this.L = 2.16e-4*mmHgToPa/cm3Tom3;
         this.V = Vector{Float64}[];
         this.P = Vector{Float64}[];
@@ -112,7 +112,9 @@ type RightAtrium
         this = new()
         this.V0 = 10*cm3Tom3;
         this.R = 4.85e-3*mmHgToPa/cm3Tom3;
+        # this.R = 6e-3*mmHgToPa/cm3Tom3;
         this.L = 5e-5*mmHgToPa/cm3Tom3;
+        # this.E = 0.16*mmHgToPa/cm3Tom3;
         this.E = 0.16*mmHgToPa/cm3Tom3;
         this.V = Vector{Float64}[];
         this.P = Vector{Float64}[];
@@ -133,12 +135,12 @@ type AorticValve
 
     function AorticValve()
         this = new()
-        this.Kvo = 0.1;
-        this.Kvc = 0.1;
-        this.leff = 0.02;
+        this.Kvo = 0.16;
+        this.Kvc = 0.16;
+        this.leff = 0.01;
         this.Po = 0;
         this.Pc = 0;
-        this.Aann = 3.2e-4;
+        this.Aann = 3.8e-4;
         this.Ks = 4e-9/cm3Tom3;
         this.zeta = Vector{Float64}[];
         return this

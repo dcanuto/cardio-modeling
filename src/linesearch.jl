@@ -69,10 +69,10 @@ function linesearch(xold::Vector{Float64},fold::Float64,
         fn = 0.5*dot(fvec,fvec);
         if alam < alamin
             x = xold;
-            println(alam)
-            println(alamin)
-            println(fn)
-            println(fold+alpha*alam*slope)
+            # println(alam)
+            # println(alamin)
+            # println(fn)
+            # println(fold+alpha*alam*slope)
             println("Δx converged in proximal line search. Verify in Newton loop.")
             check = true;
             return fn,x,check

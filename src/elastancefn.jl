@@ -24,9 +24,9 @@ function elastancefn!(system::CVSystem,n::Int64)
     # system.heart.rv.E[n+1] = (system.heart.rv.Emin*(1-phi) +
     #     system.heart.rv.Emax[system.solverparams.numbeats+1]*phi);
     system.heart.lv.E[n+1] = (system.heart.lv.Emax[system.solverparams.numbeats+1]-
-        system.heart.lv.Emin[system.solverparams.numbeats+1])*system.heart.activation.k*
-        (g1/(1+g1))*(1/(1+g2))+system.heart.lv.Emin[system.solverparams.numbeats+1];
+        system.heart.lv.Emin)*system.heart.activation.k*
+        (g1/(1+g1))*(1/(1+g2))+system.heart.lv.Emin;
     system.heart.rv.E[n+1] = (system.heart.rv.Emax[system.solverparams.numbeats+1]-
-        system.heart.rv.Emin[system.solverparams.numbeats+1])*system.heart.activation.k*
-        (g1/(1+g1))*(1/(1+g2))+system.heart.rv.Emin[system.solverparams.numbeats+1];
+        system.heart.rv.Emin)*system.heart.activation.k*
+        (g1/(1+g1))*(1/(1+g2))+system.heart.rv.Emin;
 end

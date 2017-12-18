@@ -41,6 +41,8 @@ function updatediscretization!(system::CVSystem)
     append!(system.heart.lv.P,zeros(length(ttoadd[2:end])));
     append!(system.heart.lv.E,zeros(length(ttoadd[2:end])));
 
+    append!(system.heart.av.zeta,zeros(length(ttoadd[2:end])));
+
     append!(system.heart.rv.V,zeros(length(ttoadd[2:end])));
     append!(system.heart.rv.P,zeros(length(ttoadd[2:end])));
     append!(system.heart.rv.E,zeros(length(ttoadd[2:end])));

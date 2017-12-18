@@ -16,9 +16,11 @@ function applyperipheryics!(system::CVSystem)
             system.branches.term[i].P[1,3]*system.branches.term[i].C[3] +
             system.branches.term[i].V0[3]);
             system.branches.term[i].P[1,4] = 5*mmHgToPa;
+            # system.branches.term[i].P[1,4] = 4.9*mmHgToPa;
             system.branches.term[i].V[1,4] = (
             system.branches.term[i].P[1,4]*system.branches.term[i].C[4] +
             system.branches.term[i].V0[4]);
+            # system.branches.term[i].P[1,5] = 4.5*mmHgToPa;
             system.branches.term[i].P[1,5] = 4.5*mmHgToPa;
             system.branches.term[i].V[1,5] = (
             system.branches.term[i].P[1,5]*system.branches.term[i].C[5] +
