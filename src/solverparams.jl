@@ -38,7 +38,7 @@ type SolverParams
         this.colsint = [2:this.JL-1;];
         this.nstart = 0;
         this.numbeats = 0;
-        this.numbeatstotal = 1;
+        this.numbeatstotal = 0;
         this.tshift = 0;
         this.rho = 1060;
         this.mu = 0.004;

@@ -15,10 +15,21 @@ type CVSystem # entire solution
     initialvolume::Float64
     finalvolume::Float64
 
-    function CVSystem(filename="test.csv")
+    function CVSystem(filename="test.csv",restart="no")
         this = new()
-        this.heart = Heart();
-        this.branches = ArterialBranches(filename);
+        if restart == "no"
+            this.heart = Heart();
+            this.branches = ArterialBranches(filename);
+        elseif restart == "yes"
+            vars = matread(filename);
+            sys = vars["system"];
+            heart = sys["heart"];
+            branches = sys["branches"];
+            this.heart = Heart(heart,restart)
+            this.branches = ArterialBranches(filename,branches,restart)
+        else
+            error("Keyword restart must either be yes or no. Aborting.")
+        end
         this.svc = VenaCava();
         this.ivc = VenaCava();
         this.lungs = Lungs();
@@ -30,22 +41,46 @@ type CVSystem # entire solution
 end
 
 # build solution struct
-function buildall(filename="test.csv";numbeatstotal=0,restart="yes")
-    system = CVSystem(filename);
-    system.solverparams.numbeatstotal = numbeatstotal;
-    calcbranchprops!(system)
-    discretizebranches!(system);
-    assignterminals!(system);
-    discretizeperiphery!(system);
-    discretizeheart!(system);
-    discretizelungs!(system);
-    discretizecns!(system);
-    applybranchics!(system);
-    applyperipheryics!(system);
-    applyheartics!(system);
-    applylungics!(system);
-    applycnsics!(system);
-    applycustomics!(system);
+function buildall(filename="test.csv";numbeatstotal=1,restart="no")
+    if restart == "no"
+        system = CVSystem(filename);
+        system.solverparams.numbeatstotal = numbeatstotal;
+        calcbranchprops!(system);
+        discretizebranches!(system);
+        assignterminals!(system);
+        discretizeperiphery!(system);
+        discretizeheart!(system);
+        discretizelungs!(system);
+        discretizecns!(system);
+        applybranchics!(system);
+        applyperipheryics!(system);
+        applyheartics!(system);
+        applylungics!(system);
+        applycnsics!(system);
+        applycustomics!(system);
+    elseif restart == "yes"
+        vars = matread(filename);
+        sys = vars["system"];
+        branches = sys["branches"];
+        term = branches["term"];
+        heart = sys["heart"];
+        lungs = sys["lungs"];
+        cns = sys["cns"];
+        system = CVSystem(filename,restart);
+        system.solverparams.numbeatstotal = numbeatstotal;
+        calcbranchprops!(system);
+        discretizebranches!(system,sys,restart);
+        assignterminals!(system,term,restart);
+        discretizeperiphery!(system);
+        discretizeheart!(system);
+        discretizelungs!(system);
+        discretizecns!(system);
+        applybranchics!(system,branches,restart);
+        applyperipheryics!(system,sys,restart);
+        applyheartics!(system,heart,restart);
+        applylungics!(system,lungs,restart);
+        applycnsics!(system,cns,restart);
+    end
     updatevolumes!(system,0);
     return system
 end

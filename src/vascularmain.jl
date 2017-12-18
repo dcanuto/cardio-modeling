@@ -1,7 +1,8 @@
 using CVModule
 using MAT
 
-filename = "arterytree.csv";
+# filename = "arterytree.csv";
+filename = "solution5.mat";
 
 system = buildall(filename;numbeatstotal=1,restart="yes");
 
@@ -24,6 +25,6 @@ toc()
 
 updatevolumes!(system,n);
 
-# file = matopen("solution.mat", "w")
-# write(file, "system", system)
-# close(file)
+file = matopen("baseline.mat", "w")
+write(file, "system", system)
+close(file)

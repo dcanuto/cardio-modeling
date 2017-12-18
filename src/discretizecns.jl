@@ -14,5 +14,4 @@ function discretizecns!(system::CVSystem)
     append!(system.cns.V5L,zeros(system.solverparams.numsteps+1))
     append!(system.cns.V4U,zeros(system.solverparams.numsteps+1))
     append!(system.cns.V5U,zeros(system.solverparams.numsteps+1))
-    # append!(system.cns.Paverage,zeros(1));
 end

@@ -1,6 +1,7 @@
 module CVModule # All functions/types needed for closed-loop CV system solver
 
 using NumericalIntegration
+using MAT
 
 # conversion factors and solver parameters
 include("conversions.jl")
