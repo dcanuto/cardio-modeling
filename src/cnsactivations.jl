@@ -9,6 +9,10 @@ function cnsactivations!(system::CVSystem,n::Int64)
     #     (system.cns.Paverage[system.solverparams.numbeats]/
     #     system.cns.Ptarget - 1))));
     # hard-code activations
-    push!(system.cns.ns,0.25);
-    push!(system.cns.np,0.25);
+    nst = 0.25;
+    r = 1/system.cns.c*log(log(nst^(-1/system.cns.b)))+1;
+    ns = exp(-system.cns.b*exp(system.cns.c*(r-1)));
+    np = exp(-system.cns.b*exp(-system.cns.c*(r-1)));
+    push!(system.cns.ns,ns);
+    push!(system.cns.np,np);
 end

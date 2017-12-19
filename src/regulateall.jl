@@ -75,6 +75,7 @@ function regulateall!(system::CVSystem,n::Int64)
         # SNS/PSNS activations
         cnsactivations!(system,n);
         regulateheart!(system,n);
+        correctvolume!(system,n);
         # update time discretization
         if system.solverparams.numbeats < system.solverparams.numbeatstotal
             updatediscretization!(system);

@@ -75,7 +75,7 @@ function buildall(filename="test.csv";numbeatstotal=1,restart="no")
         discretizeheart!(system);
         discretizelungs!(system);
         discretizecns!(system);
-        applybranchics!(system,branches,restart);
+        applybranchics!(system,sys,restart);
         applyperipheryics!(system,sys,restart);
         applyheartics!(system,heart,restart);
         applylungics!(system,lungs,restart);

@@ -2,6 +2,7 @@ module CVModule # All functions/types needed for closed-loop CV system solver
 
 using NumericalIntegration
 using MAT
+using Interpolations
 
 # conversion factors and solver parameters
 include("conversions.jl")
@@ -41,8 +42,9 @@ include("elastancefn.jl")
 include("elastancemodel.jl")
 include("setnumbeats.jl")
 
-# volume tracker
+# volume tracker, error corrector for mass conservation
 include("updatevolumes.jl")
+include("correctvolume.jl")
 
 # Lax-Wendroff method for interior points of arterial network
 include("predictorfluxes.jl")
