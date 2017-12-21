@@ -66,7 +66,7 @@ Left Internal carotid 3,Left Internal carotid 2,5.9,0.08,0.026,1.6
 Abdominal aorta 1,Thoracic aorta 3,5.3,0.61,0.108,0.4
 Left Brachial artery 1,Left Axillary artery 2,6.3,0.28,0.055,0.4
 Right Vertebral artery,Brachiocephalic artery,14.8,0.19,0.045,0.8
-Right External carotid,Thoracic aorta 3,11.8,0.15,0.042,0.8
+Right External carotid,Right Internal carotid 1,11.8,0.15,0.042,0.8
 Right Brachial artery 2,Right Brachial artery 1,6.3,0.26,0.053,0.4
 Right Posteriortibial artery 2,Right Posteriortibial artery 1,16.1,0.18,0.045,1.6
 Right Internal carotid 2,Right Internal carotid 1,5.9,0.13,0.039,0.8
