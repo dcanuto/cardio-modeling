@@ -6,16 +6,16 @@ function applycnsics!(system::CVSystem,old=Dict("a"=>0),restart="no")
 
         system.cns.R2L[1] = system.branches.term[13].R[2];
         system.cns.R3L[1] = system.branches.term[13].R[3];
-        system.cns.R2U[1] = system.branches.term[50].R[2];
-        system.cns.R3U[1] = system.branches.term[50].R[3];
+        system.cns.R2U[1] = system.branches.term[54].R[2];
+        system.cns.R3U[1] = system.branches.term[54].R[3];
         system.cns.C4L[1] = system.branches.term[13].C[4];
         system.cns.C5L[1] = system.branches.term[13].C[5];
-        system.cns.C4U[1] = system.branches.term[50].C[4];
-        system.cns.C5U[1] = system.branches.term[50].C[5];
+        system.cns.C4U[1] = system.branches.term[54].C[4];
+        system.cns.C5U[1] = system.branches.term[54].C[5];
         system.cns.V4L[1] = system.branches.term[13].V0[4];
         system.cns.V5L[1] = system.branches.term[13].V0[5];
-        system.cns.V4U[1] = system.branches.term[50].V0[4];
-        system.cns.V5U[1] = system.branches.term[50].V0[5];
+        system.cns.V4U[1] = system.branches.term[54].V0[4];
+        system.cns.V5U[1] = system.branches.term[54].V0[5];
 
         system.cns.gammalv = 0.8*system.cns.Emaxlv[1];
         system.cns.alphalv = 1.6*system.cns.Emaxlv[1] - system.cns.gammalv;

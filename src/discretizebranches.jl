@@ -54,7 +54,7 @@ function discretizebranches!(system::CVSystem,old=Dict("a"=>0),restart="no")
         # change grid spacing (e.g., for grid refinement study)
         JLnew = 11;
 
-        if JLnew != old["solverparams"]["JL"]
+        if JLnew != system.solverparams.JL
             system.solverparams.JL = JLnew;
             for i = 1:length(system.branches.ID)
                 system.branches.k[i] = system.branches.lengthincm[i]*cmTom/
@@ -112,6 +112,6 @@ function discretizebranches!(system::CVSystem,old=Dict("a"=>0),restart="no")
             push!(system.branches.W2,0.);
         end
     end
-
+    println(system.solverparams.JL)
     return system
 end

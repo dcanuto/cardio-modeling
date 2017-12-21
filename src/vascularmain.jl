@@ -1,10 +1,10 @@
 using CVModule
 using MAT
 
-# filename = "arterytree.csv";
-filename = "baseline.mat";
+# filename = "test.csv";
+filename = "ns55.mat";
 
-system = buildall(filename;numbeatstotal=1,restart="yes");
+system = buildall(filename;numbeatstotal=15,restart="yes");
 
 n = system.solverparams.nstart;
 
@@ -25,6 +25,6 @@ toc()
 
 updatevolumes!(system,n);
 
-file = matopen("refined.mat", "w")
+file = matopen("ns55.mat", "w")
 write(file, "system", system)
 close(file)

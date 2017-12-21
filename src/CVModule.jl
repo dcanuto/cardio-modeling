@@ -17,6 +17,7 @@ include("buildheart.jl")
 include("buildvenacava.jl")
 include("buildlungs.jl")
 include("buildcns.jl")
+include("buildhemo.jl")
 include("buildall.jl")
 
 # memory allocators for solution variables
