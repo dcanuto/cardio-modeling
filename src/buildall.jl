@@ -4,6 +4,7 @@ type CVSystem # entire solution
     svc::VenaCava
     ivc::VenaCava
     lungs::Lungs
+    hemo::Hemorrhage
     cns::CNS
     solverparams::SolverParams
     t::Vector{Float64}
@@ -34,6 +35,7 @@ type CVSystem # entire solution
         this.ivc = VenaCava();
         this.lungs = Lungs();
         this.cns = CNS();
+        this.hemo = Hemorrhage();
         this.solverparams = SolverParams();
         this.t = Vector{Float64}[];
         return this
@@ -41,7 +43,7 @@ type CVSystem # entire solution
 end
 
 # build solution struct
-function buildall(filename="test.csv";numbeatstotal=1,restart="no")
+function buildall(filename="test.csv";numbeatstotal=1,restart="no",injury="no")
     if restart == "no"
         system = CVSystem(filename);
         system.solverparams.numbeatstotal = numbeatstotal;
@@ -68,7 +70,7 @@ function buildall(filename="test.csv";numbeatstotal=1,restart="no")
         cns = sys["cns"];
         system = CVSystem(filename,restart);
         system.solverparams.numbeatstotal = numbeatstotal;
-        calcbranchprops!(system);
+        calcbranchprops!(system,branches,restart);
         discretizebranches!(system,sys,restart);
         assignterminals!(system,term,restart);
         discretizeperiphery!(system);
@@ -80,6 +82,7 @@ function buildall(filename="test.csv";numbeatstotal=1,restart="no")
         applyheartics!(system,heart,restart);
         applylungics!(system,lungs,restart);
         applycnsics!(system,cns,restart);
+        applyhemoics!(system,sys);
     end
     updatevolumes!(system,0);
     return system

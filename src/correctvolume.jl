@@ -3,7 +3,7 @@ function correctvolume!(system::CVSystem,n::Int64)
     updatevolumes!(system,n);
 
     # find error in volume
-    error = system.finalvolume - system.initialvolume;
+    error = system.finalvolume + (system.hemo.Vloss - system.hemo.Vlossinit) - system.initialvolume;
 
     # divide error proportionally to accumulation regions
     lungerror1 = 0.05*error;

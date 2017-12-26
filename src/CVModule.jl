@@ -96,6 +96,11 @@ include("reflexpressure.jl")
 include("cnsactivations.jl")
 include("regulateheart.jl")
 
+# hemorrhage/tourniquet application
+include("applytourniquet.jl")
+include("applyhemoics.jl")
+include("modelhemo.jl")
+
 export loadtexttree
 export calcbranchprops!
 export discretizebranches!
@@ -147,5 +152,6 @@ export reflexpressure!
 export cnsactivations!
 export regulateheart!
 export updatediscretization!
+export applytourniquet!
 
 end

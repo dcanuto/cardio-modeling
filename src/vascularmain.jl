@@ -1,10 +1,15 @@
 using CVModule
 using MAT
 
-# filename = "test.csv";
-filename = "ns55.mat";
+function vascularmain()
 
-system = buildall(filename;numbeatstotal=15,restart="yes");
+# filename = "test.csv";
+filename = "c9.mat";
+rstflag = "yes"
+hemoflag = "yes"
+saveflag = "yes"
+
+system = buildall(filename;numbeatstotal=10,restart=rstflag,injury=hemoflag);
 
 n = system.solverparams.nstart;
 
@@ -16,7 +21,12 @@ while system.solverparams.numbeats < system.solverparams.numbeatstotal
     correctorstep!(system,n);
     applyendbcs!(system,n);
     splitinvariants!(system,n);
-    solvesplits!(system,n);
+    if hemoflag == "no"
+        solvesplits!(system,n);
+    elseif hemoflag == "yes"
+        solvesplits!(system,n,hemoflag);
+        applytourniquet!(system,n);
+    end
     arterialpressure!(system,n);
     regulateall!(system,n);
     n+=1
@@ -25,6 +35,12 @@ toc()
 
 updatevolumes!(system,n);
 
-file = matopen("ns55.mat", "w")
-write(file, "system", system)
-close(file)
+if saveflag == "yes"
+    file = matopen("c10.mat", "w")
+    write(file, "system", system)
+    close(file)
+end
+
+return system, n
+
+end
