@@ -16,7 +16,7 @@ function newtonav!(system::CVSystem,n::Int64,state::String)
         zdot = system.heart.av.zeta[n+1]*system.heart.av.Kvc*
             (system.heart.lv.P[n+1]-system.branches.P[1][n+1,1]*mmHgToPa);
     end
-    if abs(zdot) <= 1e-5
+    if abs(zdot) <= 1e-7
         # println("dζ/dt under tolerance. Switching to reduced system.")
         x0 = zeros(2);
         if system.branches.Q[1][n+1,1] == 0

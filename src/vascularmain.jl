@@ -4,12 +4,12 @@ using MAT
 function vascularmain()
 
 # filename = "test.csv";
-filename = "c9.mat";
+filename = "uc11.mat";
 rstflag = "yes"
 hemoflag = "yes"
 saveflag = "yes"
 
-system = buildall(filename;numbeatstotal=10,restart=rstflag,injury=hemoflag);
+system = buildall(filename;numbeatstotal=1,restart=rstflag,injury=hemoflag);
 
 n = system.solverparams.nstart;
 
@@ -36,7 +36,7 @@ toc()
 updatevolumes!(system,n);
 
 if saveflag == "yes"
-    file = matopen("c10.mat", "w")
+    file = matopen("uc12.mat", "w")
     write(file, "system", system)
     close(file)
 end
