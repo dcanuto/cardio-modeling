@@ -11,10 +11,10 @@ The above flags set whether or not to restart (in which case the `filename` vari
 
     file = matopen("savefile.mat", "w")
     
-To run a case for `N` cycles, set the keyword argument `numbeatstotal` in the call to the solution initialization function:
+To run a case for `N` cardiac cycles, set the keyword argument `numbeatstotal` in the call to the solution initialization function:
 
     system = buildall(filename;numbeatstotal=N,restart=rstflag,injury=hemoflag);
     
-With the above options set, run a case for `n` time steps from the Julia REPL:
+With the above options set, build the `vascular_main` function. Then run a case for `n` time steps from the Julia REPL:
 
     system, n = vascular_main();
