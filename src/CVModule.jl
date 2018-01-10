@@ -1,6 +1,8 @@
 module CVModule # All functions/types needed for closed-loop CV system solver
 
 using NumericalIntegration
+using MAT
+using Interpolations
 
 # conversion factors and solver parameters
 include("conversions.jl")
@@ -15,6 +17,7 @@ include("buildheart.jl")
 include("buildvenacava.jl")
 include("buildlungs.jl")
 include("buildcns.jl")
+include("buildhemo.jl")
 include("buildall.jl")
 
 # memory allocators for solution variables
@@ -40,8 +43,9 @@ include("elastancefn.jl")
 include("elastancemodel.jl")
 include("setnumbeats.jl")
 
-# volume tracker
+# volume tracker, error corrector for mass conservation
 include("updatevolumes.jl")
+include("correctvolume.jl")
 
 # Lax-Wendroff method for interior points of arterial network
 include("predictorfluxes.jl")
@@ -60,6 +64,14 @@ include("updatelungs.jl")
 include("updatela.jl")
 include("coupleproximal.jl")
 include("rootinvariant.jl")
+include("fav.jl")
+include("Jav.jl")
+include("newtonav.jl")
+include("linesearch.jl")
+include("fdist.jl")
+include("Jdist.jl")
+include("newtondist.jl")
+include("linedist.jl")
 
 # 1D interior junction updates
 include("splitinvariants.jl")
@@ -83,6 +95,11 @@ include("regulateperiphery.jl")
 include("reflexpressure.jl")
 include("cnsactivations.jl")
 include("regulateheart.jl")
+
+# hemorrhage/tourniquet application
+include("applytourniquet.jl")
+include("applyhemoics.jl")
+include("modelhemo.jl")
 
 export loadtexttree
 export calcbranchprops!
@@ -135,5 +152,6 @@ export reflexpressure!
 export cnsactivations!
 export regulateheart!
 export updatediscretization!
+export applytourniquet!
 
 end

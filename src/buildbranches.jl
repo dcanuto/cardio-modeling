@@ -51,9 +51,9 @@ type ArterialBranches # 1D arterial domain
     W2root::Float64
     children::Any
     term::Any
-    Rao::Float64
+    # Rao::Float64
 
-    function ArterialBranches(filename="test.csv")
+    function ArterialBranches(filename="test.csv",old=Dict("a"=>0),restart="no")
         this = new()
         this.name = Vector{String}[];
         this.parentname = Vector{String}[];
@@ -82,29 +82,66 @@ type ArterialBranches # 1D arterial domain
         this.W1end = Vector{Float64}[];
         this.W1 = Vector{Float64}[];
         this.W2 = Vector{Float64}[];
-        this.W1root = Float64(0);
-        this.W2root = Float64(0);
-        this.Rao = 0.01*mmHgToPa/cm3Tom3;
+        if restart == "no"
+            this.W1root = Float64(0);
+            this.W2root = Float64(0);
+            # this.Rao = 0.01*mmHgToPa/cm3Tom3;
 
-        # pull in artery data from text file
-        temp = loadtexttree(filename);
+            # pull in artery data from text file
+            temp = loadtexttree(filename);
 
-        foreach((x)->push!(this.name,get(x)),temp[:Name])
-        foreach((x)->push!(this.parentname,get(x)),temp[:ParentName])
-        foreach((x)->push!(this.ID,get(x)),temp[:ID])
-        foreach((x)->push!(this.parentID,get(x)),temp[:parentID])
-        for i in 1:size(temp[:children_1],1)
-            push!(this.group,get(temp[i,:group],"NA"))
-            push!(this.children,[get(temp[i,:children_1],0)])
-            push!(this.children[i],get(temp[i,:children_2],0))
-            push!(this.children[i],get(temp[i,:children_3],0))
-            push!(this.children[i],get(temp[i,:children_4],0))
-            deleteat!(this.children[i],findin(this.children[i],0))
+            foreach((x)->push!(this.name,get(x)),temp[:Name])
+            foreach((x)->push!(this.parentname,get(x)),temp[:ParentName])
+            foreach((x)->push!(this.ID,get(x)),temp[:ID])
+            foreach((x)->push!(this.parentID,get(x)),temp[:parentID])
+            for i in 1:size(temp[:children_1],1)
+                push!(this.group,get(temp[i,:group],"NA"))
+                push!(this.children,[get(temp[i,:children_1],0)])
+                push!(this.children[i],get(temp[i,:children_2],0))
+                push!(this.children[i],get(temp[i,:children_3],0))
+                push!(this.children[i],get(temp[i,:children_4],0))
+                deleteat!(this.children[i],findin(this.children[i],0))
+            end
+            foreach((x)->push!(this.lengthincm,get(x)),temp[:Length_cm])
+            foreach((x)->push!(this.radiusincm,get(x)),temp[:Radius_cm])
+            foreach((x)->push!(this.thicknessincm,get(x)),temp[:Thickness_cm])
+            foreach((x)->push!(this.YoungsModinMPa,get(x)),temp[:YoungsModulus_MPa])
+        elseif restart == "yes"
+            this.W1root = old["W1root"];
+            this.W2root = old["W2root"];
+            this.name = [old["name"][1]];
+            this.parentname = [old["parentname"][1]];
+            this.ID = [old["ID"][1]];
+            this.parentID = [old["parentID"][1]];
+            this.group = [old["group"][1]];
+            this.lengthincm = [old["lengthincm"][1]];
+            this.radiusincm = [old["radiusincm"][1]];
+            this.thicknessincm = [old["thicknessincm"][1]];
+            this.YoungsModinMPa = [old["YoungsModinMPa"][1]];
+            for i = 2:length(old["ID"])
+                push!(this.name,old["name"][i]);
+                push!(this.parentname,old["parentname"][i]);
+                push!(this.ID,old["ID"][i]);
+                push!(this.parentID,old["parentID"][i]);
+                push!(this.group,old["group"][i]);
+                push!(this.lengthincm,old["lengthincm"][i]);
+                push!(this.radiusincm,old["radiusincm"][i]);
+                push!(this.thicknessincm,old["thicknessincm"][i]);
+                push!(this.YoungsModinMPa,old["YoungsModinMPa"][i]);
+            end
+            for i = 1:length(old["children"])
+                temp = Array{Int64}(1);
+                if length(old["children"][i]) == 1
+                    temp = [old["children"][i]];
+                elseif length(old["children"][i]) > 1
+                    temp = old["children"][i];
+                else
+                    temp = [0];
+                end
+                push!(this.children,temp)
+                deleteat!(this.children[i],findin(this.children[i],0))
+            end
         end
-        foreach((x)->push!(this.lengthincm,get(x)),temp[:Length_cm])
-        foreach((x)->push!(this.radiusincm,get(x)),temp[:Radius_cm])
-        foreach((x)->push!(this.thicknessincm,get(x)),temp[:Thickness_cm])
-        foreach((x)->push!(this.YoungsModinMPa,get(x)),temp[:YoungsModulus_MPa])
 
         this.term = Vector{ArterialTerminal}(length(this.ID));
 

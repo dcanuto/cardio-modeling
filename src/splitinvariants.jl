@@ -28,8 +28,16 @@ function splitinvariants!(system::CVSystem,n::Int64)
                 system.branches.A[i][n+1,system.solverparams.JL]^0.25 -
                 system.branches.c0[i][end]));
             dW1 = (W1[2] - W1[1])/system.branches.k[i];
+            dQ = (system.branches.Q[i][n+1,system.solverparams.JL]-
+                system.branches.Q[i][n+1,system.solverparams.JL-1])/system.branches.k[i];
+            dA = (system.branches.A[i][n+1,system.solverparams.JL]-
+                system.branches.A[i][n+1,system.solverparams.JL-1])/system.branches.k[i];
             # advance parent's distal boundary W1 by linear interp.
-            system.branches.W1[i] = W1[2] - dW1*lf*system.solverparams.h;
+            Qint = system.branches.Q[i][n+1,system.solverparams.JL] - dQ*lf*system.solverparams.h;
+            Aint = system.branches.A[i][n+1,system.solverparams.JL] - dA*lf*system.solverparams.h;
+            system.branches.W1[i] = W1[2] - dW1*lf*system.solverparams.h -
+                system.solverparams.diffusioncoeff*pi*system.solverparams.mu/
+                system.solverparams.rho*Qint/Aint^2*system.solverparams.h;
             # backward wave speed for each child's proximal end
             for j = 1:length(system.branches.children[i])
                 ID = system.branches.children[i][j];
@@ -47,9 +55,17 @@ function splitinvariants!(system::CVSystem,n::Int64)
                     4*(sqrt(0.5*system.branches.beta[ID][end]/
                     system.solverparams.rho)*system.branches.A[ID][n+1,2]^0.25-
                     system.branches.c0[ID][end]))
-                dW2 = (W2[2] - W2[1])/system.branches.k[1];
+                dW2 = (W2[2] - W2[1])/system.branches.k[ID];
+                dQ = (system.branches.Q[ID][n+1,2]-
+                    system.branches.Q[ID][n+1,1])/system.branches.k[ID];
+                dA = (system.branches.A[ID][n+1,2]-
+                    system.branches.A[ID][n+1,1])/system.branches.k[ID];
                 # advance child's proximal boundary invariant
-                system.branches.W2[ID] = W2[1] - dW2*lb*system.solverparams.h;
+                Qint = system.branches.Q[ID][n+1,1] - dQ*lb*system.solverparams.h;
+                Aint = system.branches.A[ID][n+1,1] - dA*lb*system.solverparams.h;
+                system.branches.W2[ID] = W2[1] - dW2*lb*system.solverparams.h -
+                    system.solverparams.diffusioncoeff*pi*system.solverparams.mu/
+                    system.solverparams.rho*Qint/Aint^2*system.solverparams.h;;
             end
         end
     end

@@ -1,7 +1,11 @@
-function assignterminals!(system::CVSystem)
+function assignterminals!(system::CVSystem,old=Dict("a"=>0),restart="no")
     # terminal properties adapted from Danielsen (1998)
+    # R2Total = 0.3*mmHgToPa/cm3Tom3;
     R2Total = 0.3*mmHgToPa/cm3Tom3;
     R3Total = 0.21*mmHgToPa/cm3Tom3;
+    # R3Total = 0.22*mmHgToPa/cm3Tom3;
+    # R4Total = 0.003*mmHgToPa/cm3Tom3;
+    # R5Total = 0.01*mmHgToPa/cm3Tom3;
     R4Total = 0.003*mmHgToPa/cm3Tom3;
     R5Total = 0.01*mmHgToPa/cm3Tom3;
     C1Total = 0.01*cm3Tom3/mmHgToPa;
@@ -132,8 +136,14 @@ function assignterminals!(system::CVSystem)
                 end
                 push!(system.branches.term[i].C,C2Lower);
                 push!(system.branches.term[i].C,C3Lower);
-                push!(system.branches.term[i].C,C4Lower);
-                push!(system.branches.term[i].C,C5Lower);
+                if restart == "no"
+                    push!(system.branches.term[i].C,C4Lower);
+                    push!(system.branches.term[i].C,C5Lower);
+                elseif restart == "yes"
+                    temp = old[i]["C"];
+                    push!(system.branches.term[i].C,temp[4]);
+                    push!(system.branches.term[i].C,temp[5]);
+                end
                 if !isempty(system.branches.term[i].R)
                     system.branches.term[i].R[1] += (system.solverparams.rho*
                         system.branches.c0[i][end]/system.branches.A0[i][end]);
@@ -141,8 +151,14 @@ function assignterminals!(system::CVSystem)
                     push!(system.branches.term[i].R,system.solverparams.rho*
                         system.branches.c0[i][end]/system.branches.A0[i][end]);
                 end
-                push!(system.branches.term[i].R,R2Lower);
-                push!(system.branches.term[i].R,R3Lower);
+                if restart == "no"
+                    push!(system.branches.term[i].R,R2Lower);
+                    push!(system.branches.term[i].R,R3Lower);
+                elseif restart == "yes"
+                    temp = old[i]["R"];
+                    push!(system.branches.term[i].R,temp[2]);
+                    push!(system.branches.term[i].R,temp[3]);
+                end
                 push!(system.branches.term[i].R,R4Lower);
                 push!(system.branches.term[i].R,R5Lower);
                 if !isempty(system.branches.term[i].V0)
@@ -152,8 +168,14 @@ function assignterminals!(system::CVSystem)
                 end
                 push!(system.branches.term[i].V0,V02Lower);
                 push!(system.branches.term[i].V0,V03Lower);
-                push!(system.branches.term[i].V0,V04Lower);
-                push!(system.branches.term[i].V0,V05Lower);
+                if restart == "no"
+                    push!(system.branches.term[i].V0,V04Lower);
+                    push!(system.branches.term[i].V0,V05Lower);
+                elseif restart == "yes"
+                    temp = old[i]["V0"];
+                    push!(system.branches.term[i].V0,temp[4]);
+                    push!(system.branches.term[i].V0,temp[5]);
+                end
                 append!(system.branches.term[i].L,[zeros(4),L5Lower;])
             else
                 if !isempty(system.branches.term[i].C)
@@ -163,8 +185,14 @@ function assignterminals!(system::CVSystem)
                 end
                 push!(system.branches.term[i].C,C2Upper);
                 push!(system.branches.term[i].C,C3Upper);
-                push!(system.branches.term[i].C,C4Upper);
-                push!(system.branches.term[i].C,C5Upper);
+                if restart == "no"
+                    push!(system.branches.term[i].C,C4Upper);
+                    push!(system.branches.term[i].C,C5Upper);
+                elseif restart == "yes"
+                    temp = old[i]["C"];
+                    push!(system.branches.term[i].C,temp[4]);
+                    push!(system.branches.term[i].C,temp[5]);
+                end
                 if !isempty(system.branches.term[i].R)
                     system.branches.term[i].R[1] += (system.solverparams.rho*
                         system.branches.c0[i][end]/system.branches.A0[i][end]);
@@ -172,8 +200,14 @@ function assignterminals!(system::CVSystem)
                     push!(system.branches.term[i].R,system.solverparams.rho*
                         system.branches.c0[i][end]/system.branches.A0[i][end]);
                 end
-                push!(system.branches.term[i].R,R2Upper);
-                push!(system.branches.term[i].R,R3Upper);
+                if restart == "no"
+                    push!(system.branches.term[i].R,R2Upper);
+                    push!(system.branches.term[i].R,R3Upper);
+                elseif restart == "yes"
+                    temp = old[i]["R"];
+                    push!(system.branches.term[i].R,temp[2]);
+                    push!(system.branches.term[i].R,temp[3]);
+                end
                 push!(system.branches.term[i].R,R4Upper);
                 push!(system.branches.term[i].R,R5Upper);
                 if !isempty(system.branches.term[i].V0)
@@ -183,8 +217,14 @@ function assignterminals!(system::CVSystem)
                 end
                 push!(system.branches.term[i].V0,V02Upper);
                 push!(system.branches.term[i].V0,V03Upper);
-                push!(system.branches.term[i].V0,V04Upper);
-                push!(system.branches.term[i].V0,V05Upper);
+                if restart == "no"
+                    push!(system.branches.term[i].V0,V04Upper);
+                    push!(system.branches.term[i].V0,V05Upper);
+                elseif restart == "yes"
+                    temp = old[i]["V0"];
+                    push!(system.branches.term[i].V0,temp[4]);
+                    push!(system.branches.term[i].V0,temp[5]);
+                end
                 append!(system.branches.term[i].L,[zeros(4),L5Upper;])
             end
         else
